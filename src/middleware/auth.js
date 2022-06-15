@@ -9,7 +9,8 @@ export const verifyToken = (req, res, next) => {
     return res.status(403).send("Provide Authorization Token.");
   }
   try {
-    jwt.verify(token, TOKEN_KEY);
+    const decoded = jwt.verify(token, TOKEN_KEY);
+    res.locals.userId = decoded.user;
   } catch (error) {
     return res.status(401).send("Invalid Token");
   }
